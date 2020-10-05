@@ -3,7 +3,7 @@
 /**
  * This file is part of Laravel Entrust,
  * Handle Role-based Permissions for Laravel.
- * 
+ *
  */
 
 return [
@@ -133,7 +133,7 @@ return [
              */
             'abort' => [
                 'code' => 403,
-                'message' => 'You don\'t Have a permission to Access this page.'
+                'message' => 'شما به این صفحه دسترسی ندارد.'
             ],
 
             /**
@@ -146,7 +146,7 @@ return [
                 'url' => '/',
                 'message' => [
                     'key' => 'error',
-                    'content' => 'You don\'t Have a permission to Access this page'
+                    'content' => 'شما به این صفحه دسترسی ندارید.'
                 ]
             ],
         ],

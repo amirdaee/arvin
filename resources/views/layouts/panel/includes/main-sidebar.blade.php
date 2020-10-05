@@ -2,12 +2,6 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left info">
-                <p>{{Auth::user()->name}}</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
-            </div>
-        </div>
 
         <ul class="sidebar-menu">
             @role('admin')
@@ -75,114 +69,6 @@
                             </li>
                         </ul>
                     </li>
-  )
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-code-fork"></i> <span>آدرس ها</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('addresses.index') }}">
-                                    <span>همه آدرس ها</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('addresses.create') }}">
-                                    <span>آدرس جدید</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-code-fork"></i> <span>سطح تحصیلات</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('grades.index') }}">
-                                    <span>همه سطوح</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('grades.create') }}">
-                                    <span>سطح جدید</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-code-fork"></i> <span>رشته تحصیلی</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('fields.index') }}">
-                                    <span>همه سطوح</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('fields.create') }}">
-                                    <span>سطح جدید</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-code-fork"></i> <span>مشتریان</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('customers.index') }}">
-                                    <span>همه مشتریان</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('customers.create') }}">
-                                    <span>مشتری جدید</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('services.index') }}">
-                            <i class="fa fa-server"></i> <span>خدمات</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('processes.index') }}">
-                            <i class="fa fa-server"></i> <span>مراحل</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('worklists.index') }}">
-                            <i class="fa fa-code-fork"></i> <span>لیست کاری</span>
-                        </a>
-                    </li>
-
-
-                    <li>
-                        <a href="{{ route('sms.index') }}">
-                            <i class="fa fa-code-fork"></i> <span>پیامک ها</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('contracts.index') }}">
-                            <i class="fa fa-code-fork"></i> <span>قراردادها</span>
-                        </a>
-                    </li>
-
                 </ul>
             </li>
             @endrole

@@ -134,4 +134,41 @@ Route::group(['middleware' => ['auth']], function() {
                 'middleware' => ['permission:delete-role']
             ]);
     });
+    Route::group(['prefix' => '/departments'], function(){
+        Route::get('/',
+            ['as'=>'departments.index',
+                'uses'=>'DepartmentsController@index',
+                'middleware' => ['permission:list-department|create-department|edit-department|delete-department']
+            ]);
+        Route::get('/create',
+            ['as'=>'departments.create',
+                'uses'=>'DepartmentsController@create',
+                'middleware' => ['permission:create-department']
+            ]);
+        Route::post('/create',
+            ['as'=>'departments.store',
+                'uses'=>'DepartmentsController@store',
+                'middleware' => ['permission:create-department']
+            ]);
+        Route::get('/{id}',
+            ['as'=>'departments.show',
+                'uses'=>'DepartmentsController@show',
+                'middleware' => ['permission:list-department']
+            ])->where('id', '[0-9]+');
+        Route::get('/{id}/edit',
+            ['as'=>'departments.edit',
+                'uses'=>'DepartmentsController@edit',
+                'middleware' => ['permission:edit-department']
+            ])->where('id', '[0-9]+');
+        Route::patch('/{id}',
+            ['as'=>'departments.update',
+                'uses'=>'DepartmentsController@update',
+                'middleware' => ['permission:edit-department']
+            ])->where('id', '[0-9]+');
+        Route::delete('/{id}',
+            ['as'=>'departments.destroy',
+                'uses'=>'DepartmentsController@destroy',
+                'middleware' => ['permission:delete-department']
+            ])->where('id', '[0-9]+');
+    });
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNestedSetToUsersTable extends Migration
+class AddDepartmentIdToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddNestedSetToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->nestedSet();
+            $table->bigInteger('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')->references('id')->on('departments');
         });
     }
 
@@ -26,7 +27,8 @@ class AddNestedSetToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropNestedSet();
+            $table->dropForeign('users_department_id_foreign');
+            $table->dropColumn('department_id');
         });
     }
 }

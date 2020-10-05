@@ -50,6 +50,11 @@ Route::get('/', function () {
 //        'uses' => 'Auth\ResetPasswordController@showResetForm'
 //    ]);
 
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::get('/panel',
+        ['uses'=>'PanelController@index']
+    )->name('panel');
+});

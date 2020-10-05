@@ -1,0 +1,88 @@
+@font-face{font-family:'SDF';
+    src:url('../dist/fonts/IRANSansLight.woff') format('woff'),
+    url('../dist/fonts/IRANSansLight.ttf') format('ttf');
+    font-weight:normal}
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+table thead{
+     background-color: #0f74a8;
+ }
+.progress-dots {
+    border-radius: 1em;
+    background: #737373;
+    height: 10px;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+.progress-dot {
+    position: absolute;
+    border-radius: 5em;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-top: -8px;
+    background-color: #337ab7;
+    font-size: 12px;
+}
+.progress-dot-green {
+    background-color: #00aa10;
+}
+
+.progress-start {
+    right: 18px;
+}
+
+.progress-label {
+    transform-origin: left top 0;
+    position: relative;
+    top: -2em;
+    width: 200px;
+    text-align: center;
+    margin-right: -100px;
+    right: 50%;
+    font-size: 120%;
+    display: block;
+}
+
+.progress-dots .progress-bar {
+    text-align: left;
+    background-color: #337ab7;
+}
+
+.progress-bar .progress-dot {
+    margin-right: -10px;
+}
+
+.progress-bar-disabled {
+    background: transparent !important;
+}
+
+.progress-bar-disabled .progress-dot {
+    background: #737373;
+}
+
+@media (max-width:860px) {
+    .progress-dots {
+        width: 94%;
+    }
+    .progress-dots .progress-bar:last-child .progress-label {}
+    .progress-bar-active .hidden-xs {}
+}
+.box-priority{
+    display: block;
+    min-height: 275px;
+    max-height: 275px;
+}
+.position{
+    position: absolute !important;
+    bottom: 10px !important;
+    right: 80% !important;
+}
+.de-position{
+    position: absolute !important;
+    bottom: 10px !important;
+    right: 5% !important;
+}

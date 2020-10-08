@@ -6,6 +6,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
@@ -16,11 +17,24 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         $data = User::orderBy('id','DESC')->paginate(20);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 20);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = User::find($id);
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -31,8 +45,7 @@ class UsersController extends Controller
     public function create()
     {
         $roles = Role::pluck('display_name','id');
-        $parties = $this->parties->getAllParties();
-        return view('users.create',compact('roles','parties'));
+        return view('users.create',compact('roles'));
     }
 
     /**
@@ -46,30 +59,20 @@ class UsersController extends Controller
 
         $this->validate($request, [
             'name' => 'required|unique:users',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required',
-            'party_id' => 'required'
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'roles' => 'required'
         ]);
-        $user = $this->users->create($request);
-        if($user['error']){
-            return redirect()->back()
-                ->withErrors($user['error']);
+
+        $user = new User();
+        $request->password = Hash::make($request->password);
+        $user = User::create($request->all());
+        foreach ($request->input('roles') as $key => $value) {
+            $user->attachRole($value);
         }
+
         return redirect()->route('users.index')
             ->with('success','کاربر جدید با موفقیت ثبت شد');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::find($id);
-        $party = Party::find($user->party_id);
-        return view('users.show',compact('user','party'));
     }
 
     /**
@@ -97,7 +100,8 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:users,name,'.$id,
+            'email'=>'required|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -107,20 +111,12 @@ class UsersController extends Controller
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = array_except($input,array('password'));
+            $input = Arr::except($input,array('password'));
         }
-        if($request->hasFile('avatar')){
-           $request->avatar->store('public/avatar');
-            $input['avatar'] = $request->avatar->hasName();
-        }
+
         $user = User::find($id);
         $user->update($input);
-        DB::table('role_user')->where('user_id',$id)->delete();
-
-
-        foreach ($request->input('roles') as $key => $value) {
-            $user->attachRole($value);
-        }
+        $user->roles()->sync($input['roles']);
 
         return redirect()->route('users.index')
             ->with('success','کار با موفقیت به روز شد');
@@ -134,15 +130,8 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        try{
-            User::find($id)->delete();
-            return redirect()->back()
-                ->with('success','کاربر با موفقیت حذف شد');
-        }
-        catch (\Exception $e){
-            return redirect()->back()
-                ->withErrors('این کاربر را نمی توانید حذف کنید!');
-        }
+        User::find($id)->delete();
+        return redirect()->back()
+            ->with('success','کاربر با موفقیت حذف شد');
     }
-
 }

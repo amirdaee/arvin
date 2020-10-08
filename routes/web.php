@@ -65,44 +65,44 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',
             ['as'=>'users.index',
                 'uses'=>'UsersController@index',
-                'middleware' => ['permission:list-user|create-user|edit-user|delete-user']
+                'middleware' => ['permission:read-users|create-users|update-users|delete-users']
             ]);
         Route::get('/create',
             ['as'=>'users.create',
                 'uses'=>'UsersController@create',
-                'middleware' => ['permission:create-user']
+                'middleware' => ['permission:create-users']
             ]);
         Route::post('/create',
             ['as'=>'users.store',
                 'uses'=>'UsersController@store',
-                'middleware' => ['permission:create-user']
+                'middleware' => ['permission:create-users']
             ]);
         Route::get('/{id}',
             ['as'=>'users.show',
                 'uses'=>'UsersController@show',
-                'middleware' => ['permission:list-user']
+                'middleware' => ['permission:read-users']
             ]);
         Route::get('/{id}/edit',
             ['as'=>'users.edit',
                 'uses'=>'UsersController@edit',
-                'middleware' => ['permission:edit-user']
+                'middleware' => ['permission:update-users']
             ]);
         Route::patch('/{id}',
             ['as'=>'users.update',
                 'uses'=>'UsersController@update',
-                'middleware' => ['permission:edit-user']
+                'middleware' => ['permission:update-users']
             ]);
         Route::delete('/{id}',
             ['as'=>'users.destroy',
                 'uses'=>'UsersController@destroy',
-                'middleware' => ['permission:delete-user']
+                'middleware' => ['permission:delete-users']
             ]);
     });
     Route::group(['prefix' => '/roles'], function() {
         Route::get('/',
             ['as'=>'roles.index',
                 'uses'=>'RolesController@index',
-                'middleware' => ['permission:list-role|create-role|edit-role|delete-role']
+                'middleware' => ['permission:read-role|create-role|update-role|delete-role']
             ]);
         Route::get('/create',
             ['as'=>'roles.create',
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/{id}/edit',
             ['as'=>'roles.edit',
                 'uses'=>'RolesController@edit',
-                'middleware' => ['permission:edit-role']
+                'middleware' => ['permission:update-role']
             ]);
         Route::patch('/{id}',
             ['as'=>'roles.update',
@@ -138,7 +138,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',
             ['as'=>'departments.index',
                 'uses'=>'DepartmentsController@index',
-                'middleware' => ['permission:list-department|create-department|edit-department|delete-department']
+                'middleware' => ['permission:read-department|create-department|update-department|delete-department']
             ]);
         Route::get('/create',
             ['as'=>'departments.create',
@@ -153,17 +153,17 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/{id}',
             ['as'=>'departments.show',
                 'uses'=>'DepartmentsController@show',
-                'middleware' => ['permission:list-department']
+                'middleware' => ['permission:read-department']
             ])->where('id', '[0-9]+');
         Route::get('/{id}/edit',
             ['as'=>'departments.edit',
                 'uses'=>'DepartmentsController@edit',
-                'middleware' => ['permission:edit-department']
+                'middleware' => ['permission:update-department']
             ])->where('id', '[0-9]+');
         Route::patch('/{id}',
             ['as'=>'departments.update',
                 'uses'=>'DepartmentsController@update',
-                'middleware' => ['permission:edit-department']
+                'middleware' => ['permission:update-department']
             ])->where('id', '[0-9]+');
         Route::delete('/{id}',
             ['as'=>'departments.destroy',

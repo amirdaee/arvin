@@ -15,7 +15,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                        <input id="email" type="email" class="input100  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="ایمیل">
+                        <input id="name" type="text" class="input100" name="name" value="{{ old('name') }}" required autofocus placeholder="نام کاربری">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-                    @error('email')
+                    @error('name')
                     <span class="text-danger">
                             {{ $message }}
                         </span>
@@ -53,7 +53,7 @@
 
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" >
 							ورود
 						</button>
 					</div>

@@ -49,7 +49,7 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Department');
     }
-    public function projecs()
+    public function projects()
     {
         return $this->belongsToMany('App\Project');
     }

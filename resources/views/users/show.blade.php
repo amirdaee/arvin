@@ -46,6 +46,16 @@
                             {{ $user->mobile }}
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>دسترسی پروژه: </strong>
+                            @if(!empty($user->projects))
+                                @foreach($user->projects as $project)
+                                    <label class="label label-success">{{ $project->project . " شرکت " . $project->company}}</label>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

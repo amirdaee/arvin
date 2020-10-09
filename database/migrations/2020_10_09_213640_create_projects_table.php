@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('project');
             $table->string('company');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
         Schema::create('project_user', function (Blueprint $table) {

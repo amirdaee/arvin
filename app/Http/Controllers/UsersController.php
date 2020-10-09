@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Project;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class UsersController extends Controller
     {
         $roles = Role::pluck('display_name','id');
         $departments = Department::get();
-        return view('users.create',compact('roles','departments'));
+        $projects = Project::get();
+        return view('users.create',compact('roles','departments','projects'));
     }
 
     /**
@@ -71,9 +73,8 @@ class UsersController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
         $user = User::create($input);
-        foreach ($request->input('roles') as $key => $value) {
-            $user->attachRole($value);
-        }
+        $user->roles()->sync($request->input('roles'));
+        $user->projects()->sync($request->input('projects'));
 
         return redirect()->route('users.index')
             ->with('success','کاربر جدید با موفقیت ثبت شد');
@@ -89,9 +90,11 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $roles = Role::pluck('display_name','id');
+        $projects = Project::get();
         $userRole = $user->roles->pluck('id','id')->toArray();
+        $userProject = $user->projects->pluck('id','id')->toArray();
         $departments = Department::get();
-        return view('users.edit',compact('user','roles','userRole','departments'));
+        return view('users.edit',compact('user','roles','userRole','departments','projects','userProject'));
     }
 
     /**
@@ -121,10 +124,12 @@ class UsersController extends Controller
 
         $user = User::find($id);
         $user->update($input);
-        $user->roles()->sync($input['roles']);
+        $user->roles()->sync($request->roles);
+        $user->projects()->sync($request->input('projects'));
 
         return redirect()->route('users.index')
             ->with('success','کار با موفقیت به روز شد');
+
     }
 
     /**

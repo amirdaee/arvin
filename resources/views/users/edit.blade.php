@@ -95,6 +95,25 @@
                                 @endforeach
                             </div>
                         </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>پروژه ها:</strong>
+                                @foreach ($projects->chunk(3) as $chunk)
+                                    <div class="row">
+                                        @foreach ($chunk as $project)
+                                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                                <label>
+                                                    <input name="projects[]" value="{{$project->id}}" {{ collect($userProject)->contains($project->id)? 'checked' : '' }} type="checkbox">
+                                                    {{ $project->project ." شرکت ".$project->company}}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <button type="submit" class="btn btn-primary">ذخیره</button>
                         </div>

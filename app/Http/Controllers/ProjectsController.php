@@ -104,21 +104,8 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        $department = Department::find($id);
-        if(!$department->isRoot()){
-            if ($department->users()->count() == 0){
-                Department::find($id)->delete();
-                return redirect()->route('departments.index')
-                    ->with('success','بخش با موفقیت حذف شد');
-            }
-            else{
-                return redirect()->back()
-                    ->withErrors('بخش مورد نظر به دلیل داشتن کارمند قابل حذف نیست.');
-            }
-        }
-        else{
-            return redirect()->back()
-                ->withErrors('بخش مورد نظر قابل حذف نیست.');
-        }
+        Project::find($id)->delete();
+        return redirect()->route('projects.index')
+            ->with('success','پروژه با موفقیت حذف شد');
     }
 }

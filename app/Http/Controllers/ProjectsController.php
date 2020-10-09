@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Project;
 use App\User;
 use Illuminate\Http\Request;
 
 
-class DepartmentsController extends Controller
+class ProjectsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,8 @@ class DepartmentsController extends Controller
      */
     public function index(Request $request)
     {
-        $departments = Department::orderBy('id','DESC')->paginate(5);
-        return view('departments.index',compact('departments'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $projects = Project::orderBy('id','DESC')->paginate(5);
+        return view('projects.index',compact('projects'));
     }
 
     /**
@@ -28,9 +28,8 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
-        $departments = Department::get();
-        $users = User::get();
-        return view('departments.create',compact('departments','users'));
+        $projects = Project::get();
+        return view('projects.create',compact('projects'));
     }
 
     /**
@@ -42,12 +41,12 @@ class DepartmentsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'manager_id' => 'required',
+            'project' => 'required',
+            'company' => 'required',
         ]);
-        $department = Department::create($request->all());
-        return redirect()->route('departments.index')
-            ->with('success','بخش جدید با موفقیت ثبت شد');
+        Project::create($request->all());
+        return redirect()->route('projects.index')
+            ->with('success','پروژه جدید با موفقیت ثبت شد');
     }
 
     /**
@@ -58,10 +57,8 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
-        $department = $this->departments->find($id);
-        $childs = $this->departments->getChild($id);
-        $employees = $this->employees->getAllEmployees();
-        return view('employees::departments.show',compact('department','childs','employees'));
+        $project= Project::find($id);
+        return view('projects.show',compact('project'));
     }
 
     /**
@@ -72,11 +69,8 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        $dep = Department::withDepth()->find($id);
-        $departments = Department::get();
-        $users = User::get();
-        $manager = $dep->manager()->first();
-        return view('departments.edit',compact('dep','departments','users','manager'));
+        $project = Project::find($id);
+        return view('projects.edit',compact('project'));
     }
 
     /**
@@ -91,13 +85,14 @@ class DepartmentsController extends Controller
 
 
         $this->validate($request, [
-            'name' => 'required',
+            'project' => 'required',
+            'company' => 'required',
         ]);
 
-        $department = Department::find($id);
-        $department->update($request->all());
+        $project = Project::find($id);
+        $project->update($request->all());
 
-        return redirect()->route('departments.index')
+        return redirect()->route('projects.index')
             ->with('success','بخش با موفقیت به روز شد');
     }
 

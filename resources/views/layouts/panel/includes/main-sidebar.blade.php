@@ -43,6 +43,12 @@
                             <i class="fa fa-code-fork"></i> <span>دپارتمان</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('projects.index') }}">
+                            <i class="fa fa-code-fork"></i> <span>پروژه ها</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endrole

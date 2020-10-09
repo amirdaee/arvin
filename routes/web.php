@@ -171,4 +171,41 @@ Route::group(['middleware' => ['auth']], function() {
                 'middleware' => ['permission:delete-departments']
             ])->where('id', '[0-9]+');
     });
+    Route::group(['prefix' => '/projects'], function(){
+        Route::get('/',
+            ['as'=>'projects.index',
+                'uses'=>'ProjectsController@index',
+                'middleware' => ['permission:read-projects|create-projects|update-projects|delete-projects']
+            ]);
+        Route::get('/create',
+            ['as'=>'projects.create',
+                'uses'=>'ProjectsController@create',
+                'middleware' => ['permission:create-projects']
+            ]);
+        Route::post('/create',
+            ['as'=>'projects.store',
+                'uses'=>'ProjectsController@store',
+                'middleware' => ['permission:create-projects']
+            ]);
+        Route::get('/{id}',
+            ['as'=>'projects.show',
+                'uses'=>'ProjectsController@show',
+                'middleware' => ['permission:read-projects']
+            ])->where('id', '[0-9]+');
+        Route::get('/{id}/edit',
+            ['as'=>'projects.edit',
+                'uses'=>'ProjectsController@edit',
+                'middleware' => ['permission:update-projects']
+            ])->where('id', '[0-9]+');
+        Route::patch('/{id}',
+            ['as'=>'projects.update',
+                'uses'=>'ProjectsController@update',
+                'middleware' => ['permission:update-projects']
+            ])->where('id', '[0-9]+');
+        Route::delete('/{id}',
+            ['as'=>'projects.destroy',
+                'uses'=>'ProjectsController@destroy',
+                'middleware' => ['permission:delete-projects']
+            ])->where('id', '[0-9]+');
+    });
 });

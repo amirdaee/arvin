@@ -56,11 +56,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/panel',
         ['uses'=>'PanelController@index']
     )->name('panel');
-});
-Route::group(['middleware' => ['auth']], function() {
-    Route::get('/panel',
-        ['uses'=>'PanelController@index']
-    )->name('panel');
     Route::group(['prefix' => '/users'], function() {
         Route::get('/',
             ['as'=>'users.index',

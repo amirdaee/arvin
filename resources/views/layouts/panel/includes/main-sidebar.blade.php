@@ -6,6 +6,12 @@
         <ul class="sidebar-menu">
             @role('admin')
             <li class="">
+                <a href="{{ route('panel') }}">
+                    <i class="fa fa-home"></i>
+                    <span>صفحه اصلی</span>
+                </a>
+            </li>
+            <li class="">
                 <a href="#">
                     <i class="fa fa-magic"></i>
                     <span>مدیریت</span>

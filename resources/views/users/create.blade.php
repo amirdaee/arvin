@@ -32,25 +32,34 @@
                         {{ csrf_field() }}
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
-                                <strong>نام کاربری (نام برای ورود به سیستم)</strong>
+                                <strong>نام کاربری (نام برای ورود به سیستم) *</strong>
                                 <input  class="form-control" name="name" type="text" placeholder="نام" value="{{old('name')}}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-3">
+                            <strong>دپارتمان *</strong>
+                            <select name="department_id" class="form-control">
+                                <option value=""></option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}" {{$department->parent_id ==$department->id?"selected":""}}>{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
-                                <strong>نام</strong>
+                                <strong>نام *</strong>
                                 <input name="first_name" type="text" placeholder="نام" class="form-control" value="{{old('first_name')}}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
-                                <strong>نام خانوادگی</strong>
+                                <strong>نام خانوادگی *</strong>
                                 <input name="last_name" type="text" placeholder="نام خانوادگی" class="form-control" value="{{old('last_name')}}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
-                                <strong>ایمیل</strong>
+                                <strong>ایمیل *</strong>
                                 <input name="email" type="text" placeholder="ایمیل" class="form-control" value="{{old('email')}}">
                             </div>
                         </div>
@@ -69,7 +78,7 @@
 
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
-                                <strong>کلمه عبور:</strong>
+                                <strong>کلمه عبور: *</strong>
                                 <input name="password" type="text" placeholder="کلمه" class="form-control">
                             </div>
                         </div>

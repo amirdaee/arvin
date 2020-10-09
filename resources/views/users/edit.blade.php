@@ -32,6 +32,15 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-3">
+                            <strong>دپارتمان *</strong>
+                            <select name="department_id" class="form-control">
+                                <option value=""></option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}" {{$department->id == $user->department_id ?"selected":""}}>{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="form-group">
                                 <strong>نام</strong>
                                 <input name="first_name" type="text" placeholder="نام" class="form-control" value="{{ $user->first_name}}">

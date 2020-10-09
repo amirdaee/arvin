@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -45,7 +46,8 @@ class UsersController extends Controller
     public function create()
     {
         $roles = Role::pluck('display_name','id');
-        return view('users.create',compact('roles'));
+        $departments = Department::get();
+        return view('users.create',compact('roles','departments'));
     }
 
     /**
@@ -59,14 +61,16 @@ class UsersController extends Controller
 
         $this->validate($request, [
             'name' => 'required|unique:users',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required',
             'roles' => 'required'
         ]);
 
-        $user = new User();
-        $request->password = Hash::make($request->password);
-        $user = User::create($request->all());
+        $input = $request->all();
+        $input['password'] = Hash::make($request->password);
+        $user = User::create($input);
         foreach ($request->input('roles') as $key => $value) {
             $user->attachRole($value);
         }
@@ -86,8 +90,8 @@ class UsersController extends Controller
         $user = User::find($id);
         $roles = Role::pluck('display_name','id');
         $userRole = $user->roles->pluck('id','id')->toArray();
-
-        return view('users.edit',compact('user','roles','userRole'));
+        $departments = Department::get();
+        return view('users.edit',compact('user','roles','userRole','departments'));
     }
 
     /**
@@ -102,7 +106,8 @@ class UsersController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:users,name,'.$id,
             'email'=>'required|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'roles' => 'required'
         ]);
 

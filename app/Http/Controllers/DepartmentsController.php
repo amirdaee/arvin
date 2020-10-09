@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use app\Department;
+use App\Department;
+use App\User;
 use Illuminate\Http\Request;
 
 
@@ -16,7 +17,7 @@ class DepartmentsController extends Controller
     public function index(Request $request)
     {
         $departments = Department::orderBy('id','DESC')->paginate(5);
-        return view('employees::departments.index',compact('departments'))
+        return view('departments.index',compact('departments'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -27,9 +28,9 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
-        $departments = $this->departments->getAllDepartments();
-        $employees = $this->employees->getAllEmployees();
-        return view('employees::departments.create',compact('departments','employees'));
+        $departments = Department::get();
+        $users = User::get();
+        return view('departments.create',compact('departments','users'));
     }
 
     /**
@@ -44,16 +45,7 @@ class DepartmentsController extends Controller
             'name' => 'required',
             'manager_id' => 'required',
         ]);
-
-        $input = $request->except(['manager_id']);
-        $department = Department::create($input);
-        $manager = $this->employees->find($request->input('manager_id'));
-        $manager->managerDepartments()->detach();
-        $manager->employeeDepartments()->detach();
-
-        $department->departmentManagers()->attach($manager);
-        $department->departmentEmployees()->attach($manager);
-
+        $department = Department::create($request->all());
         return redirect()->route('departments.index')
             ->with('success','بخش جدید با موفقیت ثبت شد');
     }
@@ -69,7 +61,6 @@ class DepartmentsController extends Controller
         $department = $this->departments->find($id);
         $childs = $this->departments->getChild($id);
         $employees = $this->employees->getAllEmployees();
-
         return view('employees::departments.show',compact('department','childs','employees'));
     }
 
@@ -81,11 +72,12 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        $dep = $this->departments->find($id);
-        $departments = $this->departments->getAllDepartments();
-        $employees = $this->employees->getAllEmployees();
-        $managers = $dep->departmentManagers()->get();
-        return view('employees::departments.edit',compact('dep','departments','employees','managers'));
+        $dep = Department::withDepth()->find($id);
+        $departments = Department::get();
+        $users = User::get();
+        $manager = $dep->manager()->first();
+        dd($dep->depth);
+        return view('departments.edit',compact('dep','departments','users','manager'));
     }
 
     /**
@@ -103,18 +95,8 @@ class DepartmentsController extends Controller
             'name' => 'required',
         ]);
 
-        $department = $this->departments->find($id);
-        $input = $request->except('manager_id');
-        $department->update($input);
-
-        $manager = $this->employees->find($request->input('manager_id'));
-
-        $manager->managerDepartments()->detach();
-        $manager->employeeDepartments()->detach();
-        $department->departmentManagers()->detach();
-
-        $department->departmentManagers()->attach($manager);
-        $department->departmentEmployees()->attach($manager);
+        $department = Department::find($id);
+        $department->update($request->all());
 
         return redirect()->route('departments.index')
             ->with('success','بخش با موفقیت به روز شد');
@@ -128,14 +110,21 @@ class DepartmentsController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $this->departments->find($id)->delete();
+        $department = Department::find($id);
+        if(!$department->isRoot()){
+            if ($department->users()->count() == 0){
+                Department::find($id)->delete();
+                return redirect()->route('departments.index')
+                    ->with('success','بخش با موفقیت حذف شد');
+            }
+            else{
+                return redirect()->back()
+                    ->withErrors('بخش مورد نظر به دلیل داشتن کارمند قابل حذف نیست.');
+            }
         }
-        catch (\Exception $e) {
-            return redirect()->back()->withErrors('قبل از حذف بخش باید زیر مجموعه ها تعیین تکلیف شود.');
+        else{
+            return redirect()->back()
+                ->withErrors('بخش مورد نظر قابل حذف نیست.');
         }
-
-        return redirect()->route('departments.index')
-            ->with('success','بخش با موفقیت حذف شد');
     }
 }

@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','first_name','last_name', 'email', 'password','national_id','mobile'
+        'name','first_name','last_name', 'email', 'password','national_id','mobile','department_id'
     ];
 
     /**
@@ -40,9 +40,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function post()
+    public function department()
     {
         return $this->belongsTo('App\Department');
+    }
+
+    public function managerDepartmetns()
+    {
+        return $this->hasMany('App\Department');
     }
 
 }

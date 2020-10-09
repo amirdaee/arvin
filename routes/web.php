@@ -138,37 +138,37 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',
             ['as'=>'departments.index',
                 'uses'=>'DepartmentsController@index',
-                'middleware' => ['permission:read-department|create-department|update-department|delete-department']
+                'middleware' => ['permission:read-departments|create-departments|update-departments|delete-departments']
             ]);
         Route::get('/create',
             ['as'=>'departments.create',
                 'uses'=>'DepartmentsController@create',
-                'middleware' => ['permission:create-department']
+                'middleware' => ['permission:create-departments']
             ]);
         Route::post('/create',
             ['as'=>'departments.store',
                 'uses'=>'DepartmentsController@store',
-                'middleware' => ['permission:create-department']
+                'middleware' => ['permission:create-departments']
             ]);
         Route::get('/{id}',
             ['as'=>'departments.show',
                 'uses'=>'DepartmentsController@show',
-                'middleware' => ['permission:read-department']
+                'middleware' => ['permission:read-departments']
             ])->where('id', '[0-9]+');
         Route::get('/{id}/edit',
             ['as'=>'departments.edit',
                 'uses'=>'DepartmentsController@edit',
-                'middleware' => ['permission:update-department']
+                'middleware' => ['permission:update-departments']
             ])->where('id', '[0-9]+');
         Route::patch('/{id}',
             ['as'=>'departments.update',
                 'uses'=>'DepartmentsController@update',
-                'middleware' => ['permission:update-department']
+                'middleware' => ['permission:update-departments']
             ])->where('id', '[0-9]+');
         Route::delete('/{id}',
             ['as'=>'departments.destroy',
                 'uses'=>'DepartmentsController@destroy',
-                'middleware' => ['permission:delete-department']
+                'middleware' => ['permission:delete-departments']
             ])->where('id', '[0-9]+');
     });
 });

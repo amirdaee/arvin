@@ -13,61 +13,35 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="#">
+                        <a href="{{ route('users.index') }}">
                             <i class="fa fa-share"></i>
                             <span>کاربران</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
+{{--                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>--}}
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('users.index') }}">
-                                    <i class="fa fa-users"></i> <span> همه کاربران</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('users.create') }}">
-                                    <i class="fa fa-user"></i> <span>کاربر جدید </span>
-                                </a>
-                            </li>
-                        </ul>
+{{--                        <ul class="treeview-menu">--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ route('users.index') }}">--}}
+{{--                                    <i class="fa fa-users"></i> <span> همه کاربران</span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ route('users.create') }}">--}}
+{{--                                    <i class="fa fa-user"></i> <span>کاربر جدید </span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{ route('roles.index') }}">
                             <i class="fa fa-code-fork"></i> <span>نقش ها</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('roles.index') }}">
-                                    <span>همه نقش ها</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('roles.create') }}">
-                                    <span>نقش جدید</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{ route('departments.index') }}">
                             <i class="fa fa-code-fork"></i> <span>دپارتمان</span>
-                            <i class="fa fa-angle-left pull-left icon-left-center pull-left-container"></i>
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{{ route('departments.index') }}">
-                                    <span>همه دپارتمان ها</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('departments.create') }}">
-                                    <span>دپارتمان جدید</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </li>

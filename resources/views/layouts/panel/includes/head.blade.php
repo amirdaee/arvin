@@ -56,4 +56,4 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- Material Design Bootstrap -->
-<link rel="stylesheet" href="{{asset('bower_components\mdbootstrap\css\mdb.css')}}">
+{{--<link rel="stylesheet" href="{{asset('bower_components\mdbootstrap\css\mdb.css')}}">--}}

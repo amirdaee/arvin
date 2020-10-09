@@ -51,10 +51,7 @@ class RolesController extends Controller
         $role->display_name = $request->input('display_name');
         $role->description = $request->input('description');
         $role->save();
-
-        foreach ($request->input('permission') as $key => $value) {
-            $role->attachPermission($value);
-        }
+        $role->attachPermissions($request->input('permission'));
 
         return redirect()->route('roles.index')
             ->with('success','نقش با موفقیت ایجاد شد');
@@ -85,9 +82,7 @@ class RolesController extends Controller
     {
         $role = Role::find($id);
         $permission = Permission::get();
-        $rolePermissions = DB::table("permission_role")->where("permission_role.role_id",$id)
-            ->pluck('permission_role.permission_id','permission_role.permission_id')->toArray();
-
+        $rolePermissions = $role->permissions()->pluck('id','id')->toArray();
         return view('roles.edit',compact('role','permission','rolePermissions'));
     }
 
@@ -102,20 +97,11 @@ class RolesController extends Controller
     {
         $this->validate($request, [
             'display_name' => 'required',
-            'description' => 'required',
-            'permission' => 'required',
+            'description' => 'required'
         ]);
         $role = Role::find($id);
-        $role->display_name = $request->input('display_name');
-        $role->description = $request->input('description');
-        $role->save();
-
-        DB::table("permission_role")->where("permission_role.role_id",$id)
-            ->delete();
-
-        foreach ($request->input('permission') as $key => $value) {
-            $role->attachPermission($value);
-        }
+        $role->update($request->except(['permission']));
+        $role->permissions()->sync($request->permission);
 
         return redirect()->route('roles.index')
             ->with('success','نقش مورد نظر با موفقیت به روز شد');
@@ -128,7 +114,8 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
+        $role = Role::find($id);
+        $role->delete();
         return redirect()->route('roles.index')
             ->with('success','نقش مورد نظر با موفقیت حذف شد');
     }

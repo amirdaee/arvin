@@ -102,17 +102,17 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',
             ['as'=>'roles.index',
                 'uses'=>'RolesController@index',
-                'middleware' => ['permission:read-role|create-role|update-role|delete-role']
+                'middleware' => ['permission:read-roles|create-roles|update-roles|delete-roles']
             ]);
         Route::get('/create',
             ['as'=>'roles.create',
                 'uses'=>'RolesController@create',
-                'middleware' => ['permission:create-role']
+                'middleware' => ['permission:create-roles']
             ]);
         Route::post('/create',
             ['as'=>'roles.store',
                 'uses'=>'RolesController@store',
-                'middleware' => ['permission:create-role']
+                'middleware' => ['permission:create-roles']
             ]);
         Route::get('/{id}',
             ['as'=>'roles.show',
@@ -121,17 +121,17 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/{id}/edit',
             ['as'=>'roles.edit',
                 'uses'=>'RolesController@edit',
-                'middleware' => ['permission:update-role']
+                'middleware' => ['permission:update-roles']
             ]);
         Route::patch('/{id}',
             ['as'=>'roles.update',
                 'uses'=>'RolesController@update',
-                'middleware' => ['permission:delete-role']
+                'middleware' => ['permission:delete-roles']
             ]);
         Route::delete('/{id}',
             ['as'=>'roles.destroy',
                 'uses'=>'RolesController@destroy',
-                'middleware' => ['permission:delete-role']
+                'middleware' => ['permission:delete-roles']
             ]);
     });
     Route::group(['prefix' => '/departments'], function(){

@@ -1,5 +1,6 @@
 <!-- jQuery 3 -->
 <script src="{{URL::asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
@@ -43,9 +44,10 @@
 
     {{-- time picker for vacation set time --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
 <script>
     $(document).ready(function (e) {
-
 
         $('.end-day').click(function (e) {
             $('#scoreModal').modal('show');
@@ -68,8 +70,6 @@
                 $(this).parents('form').trigger('submit');
            }
         });
-
-
     });
 </script>
 @yield('script')

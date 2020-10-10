@@ -67,11 +67,87 @@
                     <header class="box-header"><h3>پیام های سیستم</h3></header>
                     <div class="box-body">
                         <div class="container" style="max-width: 400px;">
-
+                            <form method="post" action="{{route('home')}}">
+                                <div id="example2" class="bs-docs-example">
+                                    <select class="project" name="project">
+                                        <option value="">سطح یک</option>
+                                    </select>
+                                    <select class="level1" name="level1">
+                                        <option value="">سطح دو</option>
+                                    </select>
+                                    <select class="level2" name="level2">
+                                        <option value="">سطح سه</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
     </div>
+@endsection
+@section('script')
+<script src="{{URL::asset('bower_components/cascading-dropdown/src/jquery.cascadingdropdown.js')}}" type="text/javascript"></script>
+<script>
+    $(document).ready(function (e) {
+        $('#example2').cascadingDropdown({
+            selectBoxes: [
+                {
+                    selector: '.project',
+                    source: function(request, response) {
+
+                        $.getJSON('/api/projects', request, function(data) {
+                            var selectOnlyOption = data.length <= 1;
+                            console.log(data);
+                            response($.map(data, function(item, index) {
+                                return {
+                                    label: item.project + item.company,
+                                    value: item.id,
+                                    selected: selectOnlyOption // Select if only option
+                                };
+                            }));
+                        });
+                    }
+                },
+                {
+                    selector: '.level1',
+                    requires: ['.project'],
+                    source: function(request, response) {
+                        $.getJSON('/api/resolutions', request, function(data) {
+                            var selectOnlyOption = data.length <= 1;
+                            response($.map(data, function(item, index) {
+                                return {
+                                    label: item.project + item.company,
+                                    value: item.id,
+                                    selected: selectOnlyOption // Select if only option
+                                };
+                            }));
+                        });
+                    }
+                },
+                {
+                    selector: '.level2',
+                    requires: ['.project', '.level1'],
+                    requireAll: true,
+                    source: function(request, response) {
+                        $.getJSON('/api/storages', request, function(data) {
+                            response($.map(data, function(item, index) {
+                                return {
+                                    label: item.project + item.company,
+                                    value: item.id,
+                                    selected: index == 0 // Select first available option
+                                };
+                            }));
+                        });
+                    },
+                    onChange: function(event, value, requiredValues, requirementsMet){
+                        // do stuff
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
 @endsection
 

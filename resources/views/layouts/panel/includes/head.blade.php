@@ -57,3 +57,4 @@
 
 <!-- Material Design Bootstrap -->
 {{--<link rel="stylesheet" href="{{asset('bower_components\mdbootstrap\css\mdb.css')}}">--}}
+
